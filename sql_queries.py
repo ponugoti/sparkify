@@ -78,14 +78,14 @@ songplay_table_insert = ("""
         user_agent
     )
     VALUES %s
-    ON CONFLICT (songplay_id)
+    ON CONFLICT
     DO NOTHING
 """)
 
 user_table_insert = ("""
     INSERT INTO users
     VALUES %s
-    ON CONFLICT (user_id)
+    ON CONFLICT
     DO NOTHING
 """)
 
@@ -111,7 +111,7 @@ artist_table_insert = ("""
 time_table_insert = ("""
     INSERT INTO time
     VALUES %s
-    ON CONFLICT (start_time)
+    ON CONFLICT
     DO NOTHING
 """)
 
