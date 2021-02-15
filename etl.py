@@ -59,15 +59,13 @@ def process_log_file(cur, filepath):
     execute_values(cur, user_table_insert, user_tuples)
 
     # insert songplay records
-    for index, row in df.iterrows():
-
+    for _, row in df.iterrows():
         # get songid and artistid from song and artist tables
         cur.execute(song_select, (row.song, row.artist, row.length))
         song_id, artist_id = results if (results := cur.fetchone()) else (None, None)
 
         # insert songplay record
         songplay_data = (
-            index + 1,
             str(timestamp_from_ms(row.ts)),
             row.userId,
             row.level,
