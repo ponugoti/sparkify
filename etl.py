@@ -24,6 +24,7 @@ def timestamp_from_ms(series):
 
 
 def process_song_file(cur, filepath):
+    """ Process each song file to generate rows for the `songs` and `artists` tables """
     # open song file
     df = pd.read_json(filepath, lines=True)
 
@@ -38,14 +39,10 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
-    # open log file
-    df = pd.read_json(filepath, lines=True)
-
-    # filter by NextSong action
-    df = df[df.page == 'NextSong']
-
-    # convert timestamp column to datetime
-    t = timestamp_from_ms(df['ts']).to_list()
+    """ Process each log file to generate the `users` and `songplay` tables """
+    df = pd.read_json(filepath, lines=True)         # read in log file
+    df = df[df.page == 'NextSong']                  # filter by NextSong action
+    t = timestamp_from_ms(df['ts']).to_list()       # convert timestamp column to datetime
 
     # insert time data records
     column_labels = ('start_time', 'hour', 'day', 'week', 'month', 'year', 'weekday')
