@@ -34,9 +34,9 @@ user_table_create = ("""
 
 song_table_create = ("""
     CREATE TABLE IF NOT EXISTS songs (
-        song_id INT PRIMARY KEY,
+        song_id VARCHAR PRIMARY KEY,
         title VARCHAR,
-        artist_id INT,
+        artist_id VARCHAR,
         year INT,
         duration NUMERIC
     )
@@ -44,7 +44,7 @@ song_table_create = ("""
 
 artist_table_create = ("""
     CREATE TABLE IF NOT EXISTS artists (
-        artist_id INT PRIMARY KEY,
+        artist_id VARCHAR PRIMARY KEY,
         name VARCHAR,
         location VARCHAR,
         latitude NUMERIC,
@@ -54,12 +54,13 @@ artist_table_create = ("""
 
 time_table_create = ("""
     CREATE TABLE IF NOT EXISTS time (
-        start_time TIMESTAMP,
+        start_time TIMESTAMP PRIMARY KEY,
         hour SMALLINT,
-        day DATE,
+        day SMALLINT,
+        week SMALLINT,
         month SMALLINT,
         year SMALLINT,
-        weekday VARCHAR
+        weekday SMALLINT
     )
 """)
 
