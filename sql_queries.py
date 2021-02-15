@@ -67,24 +67,67 @@ time_table_create = ("""
 # INSERT RECORDS
 
 songplay_table_insert = ("""
+    INSERT INTO songplays (
+        songplay_id,
+        start_time,
+        user_id,
+        level,
+        song_id,
+        artist_id,
+        session_id,
+        location,
+        user_agent
+    )
+    VALUES %s
+    ON CONFLICT (songplay_id)
+    DO NOTHING
 """)
 
 user_table_insert = ("""
+    INSERT INTO users
+    VALUES %s
+    ON CONFLICT (user_id)
+    DO NOTHING
 """)
 
 song_table_insert = ("""
+    INSERT INTO songs
+    VALUES %s
+    ON CONFLICT (song_id)
+    DO UPDATE
+    SET (title, artist_id, year, duration) =
+        (EXCLUDED.title, EXCLUDED.artist_id, EXCLUDED.year, EXCLUDED.duration)
 """)
 
 artist_table_insert = ("""
+    INSERT INTO artists
+    VALUES %s
+    ON CONFLICT (artist_id)
+    DO UPDATE
+    SET (name, location, latitude, longitude) =
+        (EXCLUDED.name, EXCLUDED.location, EXCLUDED.latitude, EXCLUDED.longitude)
 """)
 
 
 time_table_insert = ("""
+    INSERT INTO time
+    VALUES %s
+    ON CONFLICT (start_time)
+    DO NOTHING
 """)
 
 # FIND SONGS
 
 song_select = ("""
+    SELECT
+        songs.song_id,
+        artists.artist_id
+    FROM songs
+    JOIN artists
+    ON songs.artist_id = artists.artist_id
+    AND songs.title = %s
+    AND artists.name = %s
+    AND songs.duration = %s
 """)
 
 # QUERY LISTS
