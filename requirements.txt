@@ -1,4 +1,4 @@
 pandas==1.0.4
-numpy==1.18.1
+numpy==1.21.0
 psycopg2==2.8.6
 tqdm==4.37.0
